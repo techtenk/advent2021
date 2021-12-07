@@ -1,9 +1,13 @@
 use std::io;
-use std::fs::File;
 use crate::errors::PuzzleError;
 use crate::Puzzle;
+use std::io::BufRead;
 
 pub struct Day2Puzzle1 {
+
+}
+
+impl Day2Puzzle1 {
 
 }
 
@@ -11,7 +15,16 @@ impl Puzzle for Day2Puzzle1 {
     fn get_puzzle_name(&self) -> &'static str {
         "Day 2 Puzzle 1"
     }
-    fn run (&self, lines: &mut io::Lines<io::BufReader<File>>) -> Result<String, PuzzleError> {
+    fn get_input(&self) -> Box<&'static [u8]> {
+        let bytes = include_bytes!("../../Day02/input_tim.txt");
+        Box::new(bytes)
+    }
+    fn run (&self) -> Result<String, PuzzleError> {
+        let bytes = self.get_input();
+        let slice: &[u8] = &bytes[..];
+        let reader = io::BufReader::new(slice);
+        let lines = reader.lines();
+
         let mut depth = 0;
         let mut x = 0;
         for line in lines {
@@ -26,7 +39,7 @@ impl Puzzle for Day2Puzzle1 {
                 &_ => ()
             }
         }
-        println!("{}", depth * x);
+
         Ok((depth * x).to_string())
     }
 }
@@ -35,11 +48,24 @@ pub struct Day2Puzzle2 {
 
 }
 
+impl Day2Puzzle2 {
+
+}
+
 impl Puzzle for Day2Puzzle2 {
     fn get_puzzle_name(&self) -> &'static str {
         "Day 2 Puzzle 2"
     }
-    fn run (&self, lines: &mut io::Lines<io::BufReader<File>>) -> Result<String, PuzzleError> {
+    fn get_input(&self) -> Box<&'static [u8]> {
+        let bytes = include_bytes!("../../Day02/input_tim.txt");
+        Box::new(bytes)
+    }
+    fn run (&self) -> Result<String, PuzzleError> {
+        let bytes = self.get_input();
+        let slice: &[u8] = &bytes[..];
+        let reader = io::BufReader::new(slice);
+        let lines = reader.lines();
+
         let mut depth = 0;
         let mut x = 0;
         let mut aim = 0;
@@ -58,7 +84,7 @@ impl Puzzle for Day2Puzzle2 {
                 &_ => ()
             }
         }
-        println!("{}", depth * x);
+
         Ok((depth * x).to_string())
     }
 }

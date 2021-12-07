@@ -1,14 +1,23 @@
 pub mod day1;
 pub mod day2;
-use std::io;
-use std::fs::File;
+
 use crate::puzzles::day1::*;
 use crate::puzzles::day2::*;
 use crate::errors::PuzzleError;
+use std::io;
+use std::io::BufRead;
 
 pub trait Puzzle {
-    fn run (&self, lines: &mut std::io::Lines<io::BufReader<File>>) -> Result<String, PuzzleError>;
+    fn run (&self) -> Result<String, PuzzleError>;
     fn get_puzzle_name(&self) -> &'static str;
+    fn get_input(&self) -> Box<&'static [u8]>;
+    fn get_lines(&self) -> io::Lines<io::BufReader<&'static [u8]>>{
+        let bytes = self.get_input();
+        let slice = &bytes[..];
+        let reader = io::BufReader::new(slice);
+        let lines = reader.lines();
+        lines
+    }
 }
 
 pub fn get_puzzles() -> Vec<Box<dyn Puzzle>> {
@@ -24,3 +33,11 @@ pub fn get_puzzles() -> Vec<Box<dyn Puzzle>> {
 
     puzzles
 }
+
+// The output is wrapped in a Result to allow matching on errors
+// Returns an Iterator to the Reader of the lines of the file.
+// fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
+// where P: AsRef<Path>, {
+//     let file = File::open(filename)?;
+//     Ok(io::BufReader::new(file).lines())
+// }
