@@ -6,10 +6,10 @@ use std::num::ParseIntError;
 
 fn main() {
 
-    let file = "./Day01/puzzle_01/input_tim.txt";
+    let file = "./Day02/input_tim.txt";
 
     if let Ok(lines) = read_lines(file) {
-        let result = Day1Puzzle2::run(lines);
+        let result = Day2Puzzle2::run(lines);
         match result {
             Ok(_) => (),
             Err(_) => println!("Something went wrong!")
@@ -78,6 +78,60 @@ impl Puzzle for Day1Puzzle2 {
 
         }
         println!("{}", count);
+        Ok(true)
+    }
+}
+
+struct Day2Puzzle1 {
+
+}
+
+impl Puzzle for Day2Puzzle1 {
+    fn run (lines: io::Lines<io::BufReader<File>>) -> Result<bool, PuzzleError> {
+        let mut depth = 0;
+        let mut x = 0;
+        for line in lines {
+            let instruction = line.unwrap();
+            let mut ins_iter = instruction.split(" ");
+            let direction = ins_iter.next().unwrap();
+            let magnitude = ins_iter.next().unwrap();
+            match direction {
+                "forward" => x = x + magnitude.parse::<i32>()?,
+                "down" => depth = depth + magnitude.parse::<i32>()?,
+                "up" => depth = depth - magnitude.parse::<i32>()?,
+                &_ => ()
+            }
+        }
+        println!("{}", depth * x);
+        Ok(true)
+    }
+}
+
+struct Day2Puzzle2 {
+
+}
+
+impl Puzzle for Day2Puzzle2 {
+    fn run (lines: io::Lines<io::BufReader<File>>) -> Result<bool, PuzzleError> {
+        let mut depth = 0;
+        let mut x = 0;
+        let mut aim = 0;
+        for line in lines {
+            let instruction = line.unwrap();
+            let mut ins_iter = instruction.split(" ");
+            let direction = ins_iter.next().unwrap();
+            let magnitude = ins_iter.next().unwrap();
+            match direction {
+                "forward" => {
+                    x = x + magnitude.parse::<i32>()?;
+                    depth = depth + aim * magnitude.parse::<i32>()?;
+                },
+                "down" => aim = aim + magnitude.parse::<i32>()?,
+                "up" => aim = aim - magnitude.parse::<i32>()?,
+                &_ => ()
+            }
+        }
+        println!("{}", depth * x);
         Ok(true)
     }
 }
