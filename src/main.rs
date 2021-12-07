@@ -26,13 +26,6 @@ impl From<ParseIntError> for PuzzleError {
     }
 }
 
-impl From<std::io::Error> for PuzzleError {
-    fn from(_: std::io::Error) -> Self {
-        PuzzleError { }
-    }
-}
-
-
 trait Puzzle {
     fn run (lines: io::Lines<io::BufReader<File>>) -> Result<bool, PuzzleError>;
 }
@@ -68,17 +61,14 @@ impl Puzzle for Day1Puzzle2 {
     fn run (lines: io::Lines<io::BufReader<File>>) -> Result<bool, PuzzleError> {
         let mut previous: i32 = 0;
         let mut count: i32 = -1;
-        // a, b, and c will contain a Result, use the question mark to unwrap it and pass errors up the stack
-        // let mut a_opt = lines.nth(0);
-        // let mut a = a_opt.unwrap()?.parse::<i32>()?;
-        // let mut b = lines.nth(1).unwrap()?.parse::<i32>()?;
-        // let mut c = lines.nth(2).unwrap()?.parse::<i32>()?;
+
         let mut a;
         let mut b = 0;
         let mut c = 0;
         for line in lines {
             a = b;
             b = c;
+            // parse will yield a Result, use the question mark to unwrap it and propogate any errors up the stack
             c = line.unwrap().parse::<i32>()?;
             // now we just do the same thing as Puzzle 1, except different
             if a > 0 && (a + b + c) > previous {
