@@ -1,7 +1,5 @@
-use std::io;
 use crate::errors::PuzzleError;
 use crate::Puzzle;
-use std::io::BufRead;
 
 pub struct Day1Puzzle1 {
 
@@ -56,10 +54,7 @@ impl Puzzle for Day1Puzzle2 {
         Box::new(bytes)
     }
     fn run (&self) -> Result<String, PuzzleError> {
-        let bytes = self.get_input();
-        let slice: &[u8] = &bytes[..];
-        let reader = io::BufReader::new(slice);
-        let lines = reader.lines();
+        let lines = self.get_lines();
 
         let mut previous: i32 = 0;
         let mut count: i32 = -1;
