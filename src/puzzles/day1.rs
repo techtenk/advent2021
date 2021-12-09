@@ -5,10 +5,6 @@ pub struct Day1Puzzle1 {
 
 }
 
-impl Day1Puzzle1 {
-
-}
-
 impl Puzzle for Day1Puzzle1 {
     fn get_puzzle_name(&self) -> &'static str {
         "Day 1 Puzzle 1"
@@ -38,10 +34,6 @@ impl Puzzle for Day1Puzzle1 {
 }
 
 pub struct Day1Puzzle2 {
-
-}
-
-impl Day1Puzzle2 {
 
 }
 

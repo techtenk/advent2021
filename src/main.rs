@@ -1,3 +1,4 @@
+#![feature(drain_filter)]
 mod puzzles;
 mod errors;
 use crate::puzzles::Puzzle;
