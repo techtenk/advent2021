@@ -144,20 +144,22 @@ impl Puzzle for Day4Puzzle2 {
                 }
             }
             // boards [a, b, c, d]
-            // removes [3, 1]
+            // removes [1, 3]
+            // removes.pop() -> 3
+            // swap_remove(3)
+            // boards [a, b, c]
+            // removes [1]
             // removes.pop() -> 1
             // swap_remove(1)
-            // boards [a, d, c]
-            // removes is [3], but needs to be [1]
+            // boards [a, c]
+
             // remove the ones that would have won
             while let Some(r) = removes.pop() {
-                let last_index = boards.len() - 1;
                 boards.swap_remove(r);
-                // now the tricky part, if the last element in the boards vector is going to be removed,
-                // we have to replace it's value with the one we just deleted, since they were swapped
-                if let Some(elem) = removes.iter_mut().find(|&&mut x| x == last_index) {
-                    *elem = r;
-                }
+                // normally a swap remove could create a problem with ordering
+                // but since we pop() from removes and it's ordered, we are guarenteed
+                // that none of the indexes in the removes array will be affected by a removal
+                // of an earlier board
             }
 
             // now check if it's the last board and set the flag
