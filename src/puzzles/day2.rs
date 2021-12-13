@@ -20,13 +20,13 @@ impl Puzzle for Day2Puzzle1 {
         let mut x = 0;
         for line in lines {
             let instruction = line.unwrap();
-            let mut ins_iter = instruction.split(" ");
+            let mut ins_iter = instruction.split(' ');
             let direction = ins_iter.next().unwrap();
             let magnitude = ins_iter.next().unwrap();
             match direction {
-                "forward" => x = x + magnitude.parse::<i32>()?,
-                "down" => depth = depth + magnitude.parse::<i32>()?,
-                "up" => depth = depth - magnitude.parse::<i32>()?,
+                "forward" => x += magnitude.parse::<i32>()?,
+                "down" => depth += magnitude.parse::<i32>()?,
+                "up" => depth -= magnitude.parse::<i32>()?,
                 &_ => ()
             }
         }
@@ -60,11 +60,11 @@ impl Puzzle for Day2Puzzle2 {
             let magnitude = ins_iter.next().unwrap();
             match direction {
                 "forward" => {
-                    x = x + magnitude.parse::<i32>()?;
-                    depth = depth + aim * magnitude.parse::<i32>()?;
+                    x += magnitude.parse::<i32>()?;
+                    depth += aim * magnitude.parse::<i32>()?;
                 },
-                "down" => aim = aim + magnitude.parse::<i32>()?,
-                "up" => aim = aim - magnitude.parse::<i32>()?,
+                "down" => aim += magnitude.parse::<i32>()?,
+                "up" => aim -= magnitude.parse::<i32>()?,
                 &_ => ()
             }
         }
