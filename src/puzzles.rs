@@ -47,6 +47,7 @@ pub fn get_puzzles() -> Vec<Box<dyn Puzzle>> {
 
     // day 5
     puzzles.push(Box::new(Day5Puzzle1 {}));
+    puzzles.push(Box::new(Day5Puzzle2 {}));
 
     puzzles
 }
