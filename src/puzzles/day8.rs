@@ -108,29 +108,33 @@ fn  run_puzzle(lines: Lines<BufReader<&[u8]>>, first_puzzle: bool) -> u32 {
                                 if !patterns[1].is_empty() && patterns[1].chars().all(|c| x_chars.contains(&c)) {
                                     patterns[3] = x;
                                 }
-                                // if it shares exactly 3 segments with 4, then it's a 5
-                                else if !patterns[4].is_empty() && patterns[4].chars().fold(0, |carry, c| {
+                                // if it shares exactly 3 segments with 4, and it's not a 3, then it's a 5
+                                else if !patterns[1].is_empty() && !patterns[4].is_empty() && patterns[4].chars().fold(0, |carry, c| {
                                     // println!("is {} in {}?", c, x);
                                     if x_chars.contains(&c) {
                                         return carry + 1;
                                     }
                                     carry
                                 }) == 3 {
+                                    // println!("found 5. input {:?} five: {}", input, x);
                                     patterns[5] = x;
                                 } else if !patterns[4].is_empty() && !patterns[1].is_empty() {
-                                    // if there was a pattern for "4" to check against and we got to here, then it's process of elimination, it must be a 2
+                                    // if there was a pattern for "4" and "1" to check against and we got to here, then it's process of elimination, it must be a 2
                                     patterns[2] = x;
                                 }
                             },
                             6 => {
-                                // 6, 9
+                                // 6, 9 or 0
                                 let x_chars = x.chars().collect::<Vec<char>>();
                                 // it's 9 if it contains the digits for 3
+                                // println!("next pattern has 6 digits: {}", x);
+                                // println!("known so far: {:?}", patterns);
                                 if !patterns[3].is_empty() && patterns[3].chars().all(|c| x_chars.contains(&c)) {
+                                    // println!("{} contains {}", x, patterns[3]);
                                     patterns[9] = x;
                                 }
                                 // it's 6 if it contains the digits for 5
-                                else if !patterns[5].is_empty() && patterns[5].chars().all(|c| x_chars.contains(&c)) {
+                                else if !patterns[3].is_empty() && !patterns[5].is_empty() && patterns[5].chars().all(|c| x_chars.contains(&c)) {
                                     patterns[6] = x;
                                 } else if !patterns[3].is_empty() && !patterns[5].is_empty() {
                                     patterns[0] = x;
@@ -160,8 +164,8 @@ fn  run_puzzle(lines: Lines<BufReader<&[u8]>>, first_puzzle: bool) -> u32 {
 
                 let mut result: String = "".to_string();
                 // now we have all letters translated, "read the output"
-                println!("\npatterns: {:?}", patterns);
-                println!("output: {:?}", output);
+                // println!("\npatterns: {:?}", patterns);
+                // println!("output: {:?}", output);
                 for o in output {
                     // println!("check output {}", o);
                     // again find the output in the patterns array
@@ -169,12 +173,12 @@ fn  run_puzzle(lines: Lines<BufReader<&[u8]>>, first_puzzle: bool) -> u32 {
                         // println!("check if {} is in {:?}", o, patterns);
                         let pattern_chars = p.chars().collect::<Vec<char>>();
                         if o.len() == p.len() && o.chars().all(|c| pattern_chars.contains(&c)) {
-                            println!("push to result: {}", i);
+                            // println!("push to result: {}", i);
                             result.push_str(&i.to_string());
                         }
                     }
                 }
-                println!("result is {}", result);
+                // println!("result is {}", result);
                 result.parse::<u32>().unwrap()
             });
         }
