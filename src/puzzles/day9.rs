@@ -9,7 +9,7 @@ pub struct Day9Puzzle1 {
 
 impl Puzzle for Day9Puzzle1 {
     fn get_puzzle_name(&self) -> &'static str {
-        "Day 8 Puzzle 1"
+        "Day 9 Puzzle 1"
     }
     fn get_input(&self) -> Box<&'static [u8]> {
         let bytes = include_bytes!("../../Day09/input_tim.txt");
@@ -30,7 +30,7 @@ pub struct Day9Puzzle2 {
 
 impl Puzzle for Day9Puzzle2 {
     fn get_puzzle_name(&self) -> &'static str {
-        "Day 8 Puzzle 2"
+        "Day 9 Puzzle 2"
     }
     fn get_input(&self) -> Box<&'static [u8]> {
         let bytes = include_bytes!("../../Day09/input_tim.txt");

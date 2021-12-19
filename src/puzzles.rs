@@ -7,6 +7,7 @@ pub mod day6;
 pub mod day7;
 pub mod day8;
 pub mod day9;
+pub mod day10;
 
 use crate::puzzles::day1::*;
 use crate::puzzles::day2::*;
@@ -17,6 +18,7 @@ use crate::puzzles::day6::*;
 use crate::puzzles::day7::*;
 use crate::puzzles::day8::*;
 use crate::puzzles::day9::*;
+use crate::puzzles::day10::*;
 use crate::errors::PuzzleError;
 use std::io;
 use std::io::BufRead;
@@ -71,7 +73,11 @@ pub fn get_puzzles() -> Vec<Box<dyn Puzzle>> {
 
     // day 9
     puzzles.push(Box::new(Day9Puzzle1 {}));
-    puzzles.push(Box::new(Day9Puzzle2 {}));
+    // puzzles.push(Box::new(Day9Puzzle2 {}));
+
+    // day 10
+    puzzles.push(Box::new(Day10Puzzle1 {}));
+    puzzles.push(Box::new(Day10Puzzle2 {}));
 
     puzzles
 }
