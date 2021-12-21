@@ -35,8 +35,7 @@ pub trait Puzzle {
         let bytes = self.get_input();
         let slice = &bytes[..];
         let reader = io::BufReader::new(slice);
-        let lines = reader.lines();
-        lines
+        reader.lines()
     }
 }
 
@@ -89,7 +88,7 @@ pub fn get_puzzles() -> Vec<Box<dyn Puzzle>> {
 
     // day 12
     puzzles.push(Box::new(Day12Puzzle1 {}));
-    // puzzles.push(Box::new(Day12Puzzle2 {}));
+    puzzles.push(Box::new(Day12Puzzle2 {}));
 
     puzzles
 }
