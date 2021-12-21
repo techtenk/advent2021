@@ -32,7 +32,7 @@ impl Puzzle for Day12Puzzle1 {
     }
 }
 
-fn find_number_paths_to_end(map: Arc<HashMap<String, Cave>>, current_cave: String, visited: Vec<String>, puzzle2: bool) -> u32 {
+fn find_number_paths_to_end(map: Arc<HashMap<String, Cave>>, current_cave: String, visited: Vec<String>, second_visit_allowed: bool) -> u32 {
     // base cases
     if current_cave == "end" {
         // println!("{:?}", visited);
@@ -46,8 +46,10 @@ fn find_number_paths_to_end(map: Arc<HashMap<String, Cave>>, current_cave: Strin
     let mut visited_sorted = visited.clone();
     visited_sorted.push(current_cave.clone());
     visited_sorted.sort_unstable();
+    
     // println!("visited_sorted: {:?}", visited_sorted);
     for conn in &current.connections {
+        let mut second_visit_next = second_visit_allowed;
         // if the connection is an invalid step, such as:
         // visiting a small cave we have already visited
         // visiting "start" again -- since start is small, we'll just handle it the same
@@ -57,30 +59,14 @@ fn find_number_paths_to_end(map: Arc<HashMap<String, Cave>>, current_cave: Strin
             // if it's small, continue, else fall through to create a new thread
             let next_cave = map_ref.get(conn).expect("error");
             if !next_cave.is_large() {
-                if puzzle2 {
+                if second_visit_allowed {
                     // now if it's puzzle 2 we also need to check if this is the first small cave to be visited twice
                     if conn == "start" {
                         // of course can't visit start twice regardless
                         continue;
                     }
-
-                    let mut last = "start".to_string();
-                    let mut invalid = false;
-                    for v in visited_sorted.iter() {
-                        if last == "start" || Cave::new(v.to_string()).is_large() {
-                            last = v.clone();
-                        } else {
-                            if *v == last {
-                                // there has been a small cave visited twice, so this small cave cannot be
-                                invalid = true;
-                                break;
-                            }
-                            last = v.clone();
-                        }
-                    }
-                    if invalid {
-                        continue;
-                    }
+                    second_visit_next = false;
+                     
                 } else {
                     continue; // if it's invalid, continue to skip it
                 }
@@ -95,13 +81,13 @@ fn find_number_paths_to_end(map: Arc<HashMap<String, Cave>>, current_cave: Strin
         let conn_clone = (*conn).clone();
         // println!("I'll spawn a thread for {} to {}", current_cave, conn);
         // let's spawn a new thread for each 4 steps, otherwise just use this thread
-        if visited.len() % 4 == 0 {
+        if visited.len() % 16 == 0 {
             let handle = std::thread::spawn(move || {
-                find_number_paths_to_end(thread_map_ref, conn_clone, new_visited, puzzle2)
+                find_number_paths_to_end(thread_map_ref, conn_clone, new_visited, second_visit_next)
             });
             thread_handles.push(handle);
         } else {
-            finished_threads += find_number_paths_to_end(Arc::clone(&map), conn.to_string(), new_visited, puzzle2);
+            finished_threads += find_number_paths_to_end(Arc::clone(&map), conn.to_string(), new_visited, second_visit_next);
         }
         
     }
