@@ -22,6 +22,32 @@ impl Puzzle for Day13Puzzle1 {
         
         let (manual, folds) = build_manual(lines);
 
+        let small_manual = fold_manual(&manual, folds[0]);
+                
+        let total = small_manual.iter().flatten().fold(0, |carry, point| if *point { carry + 1 } else { carry });
+        Ok(total.to_string())
+    }
+}
+
+pub struct Day13Puzzle2 {
+
+}
+
+impl Puzzle for Day13Puzzle2 {
+
+    fn get_puzzle_name(&self) -> &'static str {
+        "Day 13 Puzzle 2"
+    }
+    fn get_input(&self) -> Box<&'static [u8]> {
+        let bytes = include_bytes!("../../Day13/input_tim.txt");
+        Box::new(bytes)
+    }
+    fn run (&self) -> Result<String, PuzzleError> {
+        
+        let lines = self.get_lines();
+        
+        let (manual, folds) = build_manual(lines);
+
         let mut final_manual = manual;
         for fold in folds {
             final_manual = fold_manual(&final_manual, fold);
@@ -30,14 +56,13 @@ impl Puzzle for Day13Puzzle1 {
 
         print_manual(&final_manual);
         
-        let total = final_manual.iter().flatten().fold(0, |carry, point| if *point { carry + 1 } else { carry });
-        Ok(total.to_string())
+        Ok("read the code ^".to_string())
     }
 }
 
-fn print_manual(manual: &Vec<Vec<bool>>) {
-    for (y, row) in manual.iter().enumerate() {
-        for (x, val) in row.iter().enumerate() {
+fn print_manual(manual: &[Vec<bool>]) {
+    for row in manual.iter() {
+        for val in row.iter() {
             if *val {
                 print!("#");
             } else {
@@ -73,7 +98,7 @@ fn fold_manual(manual: &Vec<Vec<bool>>, fold: Fold) -> Vec<Vec<bool>> {
             // enumerate a reverse iterator over the bottom half of each column
             let range = (((fold_y + 1) as usize)..manual.len()).rev();
             for (y, right_y) in range.enumerate() {
-                for (x, val) in manual[y].iter().enumerate() {
+                for (x, _) in manual[y].iter().enumerate() {
                     //println!("checking {},{} ({}) against {},{} ({})", x, y, manual[y][x], x, right_y, manual[right_y][x]);
                     after_fold[y][x] = manual[y][x] | manual[right_y][x];
                 }
@@ -119,7 +144,7 @@ fn build_manual(lines: Lines<BufReader<&[u8]>>) -> (Vec<Vec<bool>>, Vec<Fold>) {
             }
         }
     }
-    println!("max x: {}, max y: {}", max_x, max_y);
+    // println!("max x: {}, max y: {}", max_x, max_y);
     for row in manual.iter_mut() {
         row.truncate(max_x + 1);
     }

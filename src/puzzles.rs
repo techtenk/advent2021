@@ -23,7 +23,7 @@ use crate::puzzles::day8::*;
 use crate::puzzles::day9::*;
 use crate::puzzles::day10::*;
 use crate::puzzles::day11::*;
-use crate::puzzles::day12::*;
+// use crate::puzzles::day12::*;
 use crate::puzzles::day13::*;
 use crate::errors::PuzzleError;
 use std::io;
@@ -43,7 +43,7 @@ pub trait Puzzle {
 
 pub fn get_puzzles() -> Vec<Box<dyn Puzzle>> {
     let mut puzzles: Vec<Box<dyn Puzzle>> = Vec::new();
-
+    
     // day 1
     puzzles.push(Box::new(Day1Puzzle1 {}));
     puzzles.push(Box::new(Day1Puzzle2 {}));
@@ -94,7 +94,7 @@ pub fn get_puzzles() -> Vec<Box<dyn Puzzle>> {
 
     // day 13
     puzzles.push(Box::new(Day13Puzzle1 {}));
-    // puzzles.push(Box::new(Day13Puzzle2 {}));
+    puzzles.push(Box::new(Day13Puzzle2 {}));
 
     puzzles
 }
