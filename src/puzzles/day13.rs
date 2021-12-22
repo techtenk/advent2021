@@ -13,7 +13,7 @@ impl Puzzle for Day13Puzzle1 {
         "Day 13 Puzzle 1"
     }
     fn get_input(&self) -> Box<&'static [u8]> {
-        let bytes = include_bytes!("../../Day13/input_test.txt");
+        let bytes = include_bytes!("../../Day13/input_tim.txt");
         Box::new(bytes)
     }
     fn run (&self) -> Result<String, PuzzleError> {
@@ -22,11 +22,16 @@ impl Puzzle for Day13Puzzle1 {
         
         let (manual, folds) = build_manual(lines);
 
-        let small_man = fold_manual(&manual, folds[0]);
-
-        // print_manual(&manual);
+        let mut final_manual = manual;
+        for fold in folds {
+            final_manual = fold_manual(&final_manual, fold);
+        }
         
-        Ok("working".to_string())
+
+        print_manual(&final_manual);
+        
+        let total = final_manual.iter().flatten().fold(0, |carry, point| if *point { carry + 1 } else { carry });
+        Ok(total.to_string())
     }
 }
 
@@ -44,27 +49,37 @@ fn print_manual(manual: &Vec<Vec<bool>>) {
 }
 
 fn fold_manual(manual: &Vec<Vec<bool>>, fold: Fold) -> Vec<Vec<bool>> {
-    let mut after_fold = Vec::new();
+    let mut after_fold = vec![vec![false; manual[0].len()]; manual.len()];
 
     match fold {
         // here's the real work!
+        // fold left
         Fold::X(fold_x) => {
             // enumerate a reverse iterator over the right half of each row
-            for (y, col) in manual.iter().enumerate() {
-                let range = (((fold_x + 1) as usize)..col.len()).rev();
+            for (y, row) in manual.iter().enumerate() {
+                let range = (((fold_x + 1) as usize)..row.len()).rev();
                 for (x, right_x) in range.enumerate() {
-                    println!("checking {},{} ({}) against {},{} ({})", x, y, manual[y][x], right_x, y, manual[y][right_x]);
+                    //println!("checking {},{} ({}) against {},{} ({})", x, y, manual[y][x], right_x, y, manual[y][right_x]);
+                    after_fold[y][x] = manual[y][x] | manual[y][right_x];
                 }
             }
+            // afterward, truncate each row of after_fold
+            for row in after_fold.iter_mut() {
+                row.truncate(fold_x as usize);
+            }
         },
+        // fold up
         Fold::Y(fold_y) => {
             // enumerate a reverse iterator over the bottom half of each column
             let range = (((fold_y + 1) as usize)..manual.len()).rev();
             for (y, right_y) in range.enumerate() {
                 for (x, val) in manual[y].iter().enumerate() {
-                    println!("checking {},{} ({}) against {},{} ({})", x, y, manual[y][x], x, right_y, manual[right_y][x]);
+                    //println!("checking {},{} ({}) against {},{} ({})", x, y, manual[y][x], x, right_y, manual[right_y][x]);
+                    after_fold[y][x] = manual[y][x] | manual[right_y][x];
                 }
             }
+            // afterward, truncate after_fold to smaller size
+            after_fold.truncate(fold_y as usize);
         }
     }
 
