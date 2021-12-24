@@ -1,5 +1,6 @@
 #![feature(drain_filter)]
 #![feature(hash_drain_filter)]
+#![feature(linked_list_cursors)]
 #![warn(clippy::all)]
 mod puzzles;
 mod errors;
