@@ -46,68 +46,54 @@ pub trait Puzzle {
 }
 
 pub fn get_puzzles() -> Vec<Box<dyn Puzzle>> {
-    let mut puzzles: Vec<Box<dyn Puzzle>> = Vec::new();
+    let mut puzzles: Vec<Box<dyn Puzzle>> = vec!{
+        Box::new(Day1Puzzle1 {}),
+        Box::new(Day1Puzzle2 {}),
+
+        Box::new(Day2Puzzle1 {}),
+        Box::new(Day2Puzzle2 {}),
+        
+        Box::new(Day3Puzzle1 {}),
+        Box::new(Day3Puzzle2 {}),
+        
+        Box::new(Day4Puzzle1 {}),
+        Box::new(Day4Puzzle2 {}),
+        
+        Box::new(Day5Puzzle1 {}),
+        Box::new(Day5Puzzle2 {}),
+        
+        Box::new(Day6Puzzle1 {}),
+        Box::new(Day6Puzzle2 {}),
+        
+        Box::new(Day7Puzzle1 {}),
+        Box::new(Day7Puzzle2 {}),
+        
+        Box::new(Day8Puzzle1 {}),
+        Box::new(Day8Puzzle2 {}),
+        
+        Box::new(Day9Puzzle1 {}),
+        Box::new(Day9Puzzle2 {}),
+        
+        Box::new(Day10Puzzle1 {}),
+        Box::new(Day10Puzzle2 {}),
+        
+        Box::new(Day11Puzzle1 {}),
+        Box::new(Day11Puzzle2 {}),
+
+        // Box::new(Day12Puzzle1 {}),
+        // Box::new(Day12Puzzle2 {}),
+
+        Box::new(Day13Puzzle1 {}),
+        Box::new(Day13Puzzle2 {}),
+
+        Box::new(Day14Puzzle1 {}),
+        Box::new(Day14Puzzle2 {}),
+
+        Box::new(Day15Puzzle1 {}),
+        Box::new(Day15Puzzle2 {}),
+
+    };
     
-    // // day 1
-    // puzzles.push(Box::new(Day1Puzzle1 {}));
-    // puzzles.push(Box::new(Day1Puzzle2 {}));
-
-    // // day 2
-    // puzzles.push(Box::new(Day2Puzzle1 {}));
-    // puzzles.push(Box::new(Day2Puzzle2 {}));
-
-    // // day 3
-    // puzzles.push(Box::new(Day3Puzzle1 {}));
-    // puzzles.push(Box::new(Day3Puzzle2 {}));
-
-    // // day 4
-    // puzzles.push(Box::new(Day4Puzzle1 {}));
-    // puzzles.push(Box::new(Day4Puzzle2 {}));
-
-    // // day 5
-    // puzzles.push(Box::new(Day5Puzzle1 {}));
-    // puzzles.push(Box::new(Day5Puzzle2 {}));
-
-    // // day 6
-    // puzzles.push(Box::new(Day6Puzzle1 {}));
-    // puzzles.push(Box::new(Day6Puzzle2 {}));
-
-    // // day 7
-    // puzzles.push(Box::new(Day7Puzzle1 {}));
-    // puzzles.push(Box::new(Day7Puzzle2 {}));
-
-    // // day 8
-    // puzzles.push(Box::new(Day8Puzzle1 {}));
-    // puzzles.push(Box::new(Day8Puzzle2 {}));
-
-    // // day 9
-    // puzzles.push(Box::new(Day9Puzzle1 {}));
-    // // puzzles.push(Box::new(Day9Puzzle2 {}));
-
-    // // day 10
-    // puzzles.push(Box::new(Day10Puzzle1 {}));
-    // puzzles.push(Box::new(Day10Puzzle2 {}));
-
-    // // day 11
-    // puzzles.push(Box::new(Day11Puzzle1 {}));
-    // puzzles.push(Box::new(Day11Puzzle2 {}));
-
-    // // day 12
-    // // puzzles.push(Box::new(Day12Puzzle1 {}));
-    // // puzzles.push(Box::new(Day12Puzzle2 {}));
-
-    // // day 13
-    // puzzles.push(Box::new(Day13Puzzle1 {}));
-    // puzzles.push(Box::new(Day13Puzzle2 {}));
-
-    // // day 14
-    // puzzles.push(Box::new(Day14Puzzle1 {}));
-    // puzzles.push(Box::new(Day14Puzzle2 {}));
-
-    // day 15
-    // puzzles.push(Box::new(Day15Puzzle1 {}));
-    puzzles.push(Box::new(Day15Puzzle2 {}));
-
     puzzles
 }
 

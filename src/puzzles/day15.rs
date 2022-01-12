@@ -58,7 +58,7 @@ impl Puzzle for Day15Puzzle1 {
 }
 
 // find the node with the shortest distance from src that hasn't been finalized
-fn min_distance<const SIZE: usize>(distance_graph: &Vec<u32>, spt_set: &Vec<bool>) -> usize {
+fn min_distance<const SIZE: usize>(distance_graph: &[u32], spt_set: &[bool]) -> usize {
     let mut min = u32::MAX;
     let mut min_index = 0;
     for (i, v) in spt_set.iter().enumerate() {
@@ -194,6 +194,7 @@ impl Puzzle for Day15Puzzle2 {
     }
 }
 
+#[allow(non_snake_case)]
 struct RiskGraph {
     graph: Vec<Vec<u32>>,
     SIZE: usize
